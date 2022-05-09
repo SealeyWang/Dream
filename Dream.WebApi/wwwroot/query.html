@@ -1,0 +1,445 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<style>
+    .wrapper {
+        display: flex;
+    }
+
+    .content {
+        border: 1px solid gray;
+        width: 800px;
+    }
+
+    .content>div {
+        display: none;
+    }
+
+    #list {
+        min-width: 100px;
+        list-style: none;
+        text-align: center;
+        min-height: 600px;
+        padding-right: 20px;
+        border: 1px solid gray;
+        margin-top: 0;
+        margin-bottom: 0;
+        margin-right: 20px;
+    }
+
+    #list li {
+        margin: 10px 0;
+
+    }
+
+    #list li a {
+        color: blue;
+    }
+
+    .userInfo>.row {
+        padding-left: 100px;
+        margin: 20px 0;
+    }
+
+    .userInfo>.row>label {
+        width: 140px;
+        display: inline-block;
+    }
+
+
+
+    .apply>.row,
+    .viewApply>.row {
+        padding-left: 100px;
+        margin: 20px 0;
+    }
+
+    .apply>.row>label {
+        width: 140px;
+        display: inline-block;
+    }
+
+    #applyBtn {
+        margin-left: 300px;
+    }
+</style>
+
+<body>
+    <div class="wrapper">
+        <ul id="list">
+            <li id="userInfo"><a>查看个人信息</a></li>
+            <!-- <li id="setUserInfo"><a>修改个人资料</a></li> -->
+            <li id="apply"><a>我要报名</a></li>
+            <li id="viewApply"><a>查看报名信息</a></li>
+            <li id="cancelApply"><a>注销报名</a></li>
+        </ul>
+        <div class="content">
+            <div class="userInfo item">
+                <div class="row">
+                    <label>用户ID:</label> <span id="User_ID"><span>
+                </div>
+                <div class="row">
+                    <label>姓名:</label> <span id="User_Name"><span>
+                </div>
+
+
+                <div class="row">
+                    <label>生日:</label> <span id="User_Birthday"><span>
+                </div>
+                <div class="row">
+                    <label>家庭住址:</label> <span id="User_Address"><span>
+                </div>
+                <div class="row">
+                    <label>电子邮箱:</label> <span id="User_Email"><span>
+                </div>
+                <div class="row">
+                    <label>联系电话:</label> <span id="User_Tel"><span>
+                </div>
+                <div class="row">
+                    <label>名族: </label><span id="User_Race"><span>
+                </div>
+                <div class="row">
+                    <label>学历:</label> <span id="User_Degree"><span>
+                </div>
+                <div class="row" style="display: block;">
+                    <label>照片:</label> <img id="User_Image" style="max-height: 200px;" />
+                </div>
+
+            </div>
+            <div class="setUserInfo item">setUserInfo</div>
+            <div class="apply item">
+                <div class="row">
+                    <label>学生姓名:</label> <input name="stuname" />
+                </div>
+                <div class="row">
+                    <label>出生日期:</label>
+                    <input name="stubirthday" type="date" />
+                </div>
+
+                <div class="row">
+                    <label>联系电话:</label>
+                    <input name="stumobile" />
+                </div>
+
+                <div class="row">
+                    <label>电子邮箱:</label>
+                    <input name="stumail" />
+                </div>
+
+
+
+                <div class="row">
+                    <label>学生性别:</label>
+                    <select id="stusex">
+                        <option value="0">男</option>
+                        <option value="1">女</option>
+                    </select>
+                </div>
+                <div class="row">
+                    <label>学生年龄:</label>
+                    <input name="stuage" />
+                </div>
+                <div class="row">
+                    <label>学生民族:</label>
+                    <input name="stunation" />
+                </div>
+                <div class="row">
+                    <label>紧急联系电话:</label>
+                    <input name="stuhomephone" />
+                </div>
+
+
+                <div class="row">
+                    <label>专业名称:</label>
+                    <select id="subname">
+
+                    </select>
+                </div>
+
+                <button id="applyBtn">报名</button>
+
+            </div>
+            <div class="viewApply item">
+                <div class="row">
+                    <label>学生姓名:</label> <span name="stuname"></span>
+                </div>
+                <div class="row">
+                    <label>出生日期:</label>
+                    <span name="stubirthday" type="date"></span>
+                </div>
+
+                <div class="row">
+                    <label>联系电话:</label>
+                    <span name="stumobile"></span>
+                </div>
+
+                <div class="row">
+                    <label>电子邮箱:</label>
+                    <span name="stumail"></span>
+                </div>
+
+                <div class="row">
+                    <label>学生性别:</label>
+                    <span name="stusex"></span>
+                </div>
+                <div class="row">
+                    <label>学生年龄:</label>
+                    <span name="stuage"></span>
+                </div>
+                <div class="row">
+                    <label>学生民族:</label>
+                    <span name="stunation"></span>
+                </div>
+                <div class="row">
+                    <label>紧急联系电话:</label>
+                    <span name="stuhomephone"></span>
+                </div>
+
+
+                <div class="row">
+                    <label>专业名称:</label>
+                    <span name="subname"></span>
+                </div>
+
+            </div>
+            <div class="cancelApply item">cancelApply</div>
+        </div>
+    </div>
+
+</body>
+<script src="lib/jquery.js"></script>
+
+
+<script>
+    $('.userInfo').show();
+    // $('.apply').show();
+    const userInfoStr = localStorage.getItem('userInfo');
+
+    if (userInfoStr) {
+        const userInfo = JSON.parse(userInfoStr);
+
+        $('.userInfo .row span').each((index, elem) => {
+            const id = elem.id;
+            if (id === 'User_Birthday') {
+                const birthdayStr = userInfo[id];
+                const date = new Date(birthdayStr);
+                const birthdayFormat = date.toLocaleDateString();
+                elem.textContent = birthdayFormat;
+
+
+            }
+            else {
+                elem.textContent = userInfo[id];
+            }
+
+        })
+        $('#User_Image').attr('src', userInfo.User_ImageType + userInfo.User_Image)
+    }
+
+
+
+
+    $.ajax({
+        url: '/api/Subject/list',
+        method: 'get',
+        success: (res) => {
+            res = JSON.parse(res);
+            if (res.code === 0) {
+                const data = JSON.parse(res.data);
+                const subjects = data.Table;
+
+
+                let str = '';
+                for (let i = 0; i < subjects.length; i++) {
+                    const s = subjects[i];
+                    str = str +
+                        `<option value="${s.subname}">${s.subname}</option>`
+                }
+
+                $('#subname').html(str);
+
+            }
+
+        }
+    })
+
+
+    $('#list').on('click', 'li', e => {
+        console.log(e.target);
+        console.log(e.currentTarget);
+        const id = e.currentTarget.id;
+        $('.content > .item').hide();
+        if (id === 'cancelApply') {
+            if (userInfoStr) {
+                const userInfo = JSON.parse(userInfoStr);
+                removeApply(userInfo.User_Name);
+            } else {
+                alert('您未登录')
+            }
+
+
+        } else if (id === 'viewApply') {
+            viewApply();
+        } else {
+            $(`.${id}`).show();
+        }
+
+    })
+
+
+    function viewApply() {
+        if (userInfoStr) {
+            const userInfo = JSON.parse(userInfoStr);
+
+            $.ajax({
+                url: '/api/Student/query?uname=' + userInfo.User_Name,
+                method: 'get',
+                success: (res) => {
+                    $(`.viewApply`).show();
+
+                    res = JSON.parse(res);
+                    if (res.code === 0) {
+                        if (res.data <= 0) {
+                            alert('您还没有报名')
+                            return
+                        } else {
+                            const data = JSON.parse(res.data);
+                            if (data.Table.length <= 0) {
+                                alert('您还没有报名')
+
+                                return
+                            }
+                            const student = data.Table[0]
+
+                            console.log(student)
+                            student.stubirthday = new Date(student.stubirthday).toLocaleDateString()
+
+                            const keys = {
+                                stuname: '',
+                                stubirthday: '',
+                                stumobile: '',
+                                stumail: '',
+                                stusex: '',
+                                stuage: '',
+                                stunation: '',
+                                stuhomephone: '',
+                                subname: '',
+
+                            };
+                            for (let k in keys) {
+                                const value = student[k];
+                                const elem = $(`.viewApply.item > .row > span[name=${k}]`)
+                                elem.text(value);
+                            }
+
+
+
+                        }
+
+                    }
+                }
+
+            })
+        }
+
+    }
+    function removeApply(uname) {
+        $.ajax({
+            url: '/api/Student/remove?uname=' + uname,
+            method: 'get',
+            success: (res) => {
+                res = JSON.parse(res);
+                console.log(res);
+                if (res.code === 0) {
+                    if (res.data === '0') {
+                        alert('还未报名')
+
+                    } else {
+                        alert('注销报名成功')
+                    }
+                }
+            }
+
+        })
+
+
+    }
+
+    $('#applyBtn').click(() => {
+
+        const params = {
+            stuname: '',
+            stubirthday: '',
+            stumobile: '',
+            stumail: '',
+            stuage: '',
+            stunation: '',
+            stuhomephone: '',
+
+
+        }
+        const inputs = $('.apply>.row>input');
+        for (let i = 0; i < inputs.length; i++) {
+            const elem = inputs[i]
+            const name = elem.name;
+            params[name] = elem.value;
+
+        }
+
+        const stusex = $('#stusex').find(":selected").text();
+        const subname = $('#subname').find(":selected").text();
+        params.stusex = stusex;
+        params.subname = subname
+
+
+        for (key in params) {
+            if (params[key] === "") {
+                alert('请填写所有信息')
+                return
+            }
+        }
+
+        if (!userInfoStr) {
+            alert('请先登录')
+            return
+        } else {
+            const userInfo = JSON.parse(userInfoStr);
+            params.uname = userInfo.User_Name;
+
+        }
+        $.ajax({
+            url: '/api/Student/add',
+            method: 'post',
+            contentType: "application/json;charset=UTF-8",
+            data: JSON.stringify(params),
+            success: (res) => {
+                res = JSON.parse(res);
+                console.log(res);
+                if (res.code === 0) {
+                    alert('添加成功')
+                } else {
+                    alert('添加失败， 您已报名')
+                }
+
+            }
+
+
+
+        })
+
+
+    })
+
+
+
+
+</script>
+
+</html>

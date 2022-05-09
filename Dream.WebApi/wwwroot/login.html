@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>登录</title>
+</head>
+
+<style>
+    .login-wrapper {
+        margin: auto;
+        width: 240px;
+        margin-top: 300px;
+    }
+</style>
+
+<body>
+
+
+    <div class="login-wrapper">
+        <div>用户名: <input id="name" /></div>
+        <div>密码: <input id="password" style="margin-left: 20px;" type="password" /></div>
+        <div style="margin-top: 25px; display: flex; justify-content: space-between;">
+            <button id="login">登录</button>
+            <button id="register">注册</button>
+        </div>
+    </div>
+
+</body>
+<script src="lib/jquery.js"></script>
+
+<script>
+
+
+    $('#login').click(() => {
+        const name = $('#name').val();
+        const password = $('#password').val();
+
+        $.ajax({
+            url: `/api/User/login?userName=${name}&password=${password}`,
+            method: 'post',
+            success: (res) => {
+                const obj = JSON.parse(res)
+                console.log(res)
+                if (obj.code === 0) {
+                    if (obj.data.User_ID !== 0) {
+                        localStorage.setItem('userInfo', JSON.stringify(obj.data))
+                        window.location.pathname = '/index.html'
+                    } else {
+                        alert('没有此用户')
+                    }
+                }
+
+            }
+        })
+    })
+
+    $('#register').click(() => window.location.pathname = '/register.html')
+
+
+</script>
+
+</html>

@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>新增专业</title>
+</head>
+
+<style>
+    #content {
+        width: 300px;
+        height: 100px;
+        margin-left: 5px;
+    }
+
+    .row.content {
+        margin-top: 30px;
+        display: flex;
+    }
+</style>
+
+<body>
+    <div class="wrapper">
+        <div class="row">
+            新闻标题: <input id="title">
+        </div>
+        <div class="row content">
+            新闻内容: <textarea id="content"></textarea>
+        </div>
+
+
+
+        <button id="submit">提交</button>
+    </div>
+
+</body>
+<script src="../lib/jquery.js"></script>
+
+<script>
+
+    $('#submit').click(() => {
+
+
+        const newstitle = $('#title').val();
+        const newscontent = $('#content').val();
+        const now = new Date();
+        const newsTime = now.toLocaleDateString() + ' ' + now.toLocaleTimeString();
+        const params = {
+            newstitle,
+            newscontent,
+            newsTime,
+        }
+
+        console.log('params', params)
+
+        if (!newstitle || !newscontent) {
+            alert('请填写所有信息')
+            return;
+        }
+
+
+
+        $.ajax({
+            url: '/api/News/add',
+            method: 'post',
+            contentType: "application/json;charset=UTF-8",
+            data: JSON.stringify(params),
+            success: (res) => {
+                res = JSON.parse(res);
+                if (res.code === 0) {
+                    alert('添加成功')
+
+                }
+
+            }
+
+
+        })
+        console.log(params);
+
+    })
+
+</script>
+
+</html>

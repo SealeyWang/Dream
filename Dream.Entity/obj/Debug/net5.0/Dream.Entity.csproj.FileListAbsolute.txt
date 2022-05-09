@@ -1,0 +1,12 @@
+C:\Users\11255\source\repos\Dream\Dream.Entity\bin\Debug\net5.0\Dream.Entity.deps.json
+C:\Users\11255\source\repos\Dream\Dream.Entity\bin\Debug\net5.0\Dream.Entity.dll
+C:\Users\11255\source\repos\Dream\Dream.Entity\bin\Debug\net5.0\ref\Dream.Entity.dll
+C:\Users\11255\source\repos\Dream\Dream.Entity\bin\Debug\net5.0\Dream.Entity.pdb
+C:\Users\11255\source\repos\Dream\Dream.Entity\obj\Debug\net5.0\Dream.Entity.csproj.AssemblyReference.cache
+C:\Users\11255\source\repos\Dream\Dream.Entity\obj\Debug\net5.0\Dream.Entity.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\11255\source\repos\Dream\Dream.Entity\obj\Debug\net5.0\Dream.Entity.AssemblyInfoInputs.cache
+C:\Users\11255\source\repos\Dream\Dream.Entity\obj\Debug\net5.0\Dream.Entity.AssemblyInfo.cs
+C:\Users\11255\source\repos\Dream\Dream.Entity\obj\Debug\net5.0\Dream.Entity.csproj.CoreCompileInputs.cache
+C:\Users\11255\source\repos\Dream\Dream.Entity\obj\Debug\net5.0\Dream.Entity.dll
+C:\Users\11255\source\repos\Dream\Dream.Entity\obj\Debug\net5.0\ref\Dream.Entity.dll
+C:\Users\11255\source\repos\Dream\Dream.Entity\obj\Debug\net5.0\Dream.Entity.pdb

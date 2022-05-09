@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>新增专业</title>
+</head>
+
+<body>
+    <div class="wrapper">
+        <div class="row">
+            专业名: <input name="subname">
+        </div>
+
+
+        <div class="row">
+            专业编号: <input name="subnumber">
+        </div>
+
+
+
+
+        <div class="row">
+            费用: <input name="subcost">
+        </div>
+
+        <div class="row">
+            专业信息: <input name="subinfo">
+        </div>
+        <button id="submit">提交</button>
+    </div>
+
+</body>
+<script src="../lib/jquery.js"></script>
+
+<script>
+
+    $('#submit').click(() => {
+        const params = {
+            subname: '',
+            subnumber: '',
+            subcost: '',
+            subinfo: ''
+        }
+        const inputs = $('.wrapper .row input')
+        console.log(inputs);
+        for (let i = 0; i < inputs.length; i++) {
+            const elem = inputs[i];
+            const name = elem.name;
+            const value = elem.value;
+            if (!value) {
+                alert('请填写所有信息')
+                return;
+            } else {
+                params[name] = value;
+            }
+
+        }
+
+        $.ajax({
+            url: '/api/Subject/add',
+            method: 'post',
+            contentType: "application/json;charset=UTF-8",
+            data: JSON.stringify(params),
+            success: (res) => {
+                res = JSON.parse(res);
+                if (res.code === 0) {
+                    alert('添加成功')
+
+                }
+
+            }
+
+
+        })
+        console.log(params);
+
+    })
+
+</script>
+
+</html>

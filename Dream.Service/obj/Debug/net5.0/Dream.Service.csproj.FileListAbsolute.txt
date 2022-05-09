@@ -1,0 +1,15 @@
+C:\Users\11255\source\repos\Dream\Dream.Service\bin\Debug\net5.0\Dream.Service.deps.json
+C:\Users\11255\source\repos\Dream\Dream.Service\bin\Debug\net5.0\Dream.Service.dll
+C:\Users\11255\source\repos\Dream\Dream.Service\bin\Debug\net5.0\ref\Dream.Service.dll
+C:\Users\11255\source\repos\Dream\Dream.Service\bin\Debug\net5.0\Dream.Service.pdb
+C:\Users\11255\source\repos\Dream\Dream.Service\bin\Debug\net5.0\Dream.Entity.dll
+C:\Users\11255\source\repos\Dream\Dream.Service\bin\Debug\net5.0\Dream.Entity.pdb
+C:\Users\11255\source\repos\Dream\Dream.Service\obj\Debug\net5.0\Dream.Service.csproj.AssemblyReference.cache
+C:\Users\11255\source\repos\Dream\Dream.Service\obj\Debug\net5.0\Dream.Service.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\11255\source\repos\Dream\Dream.Service\obj\Debug\net5.0\Dream.Service.AssemblyInfoInputs.cache
+C:\Users\11255\source\repos\Dream\Dream.Service\obj\Debug\net5.0\Dream.Service.AssemblyInfo.cs
+C:\Users\11255\source\repos\Dream\Dream.Service\obj\Debug\net5.0\Dream.Service.csproj.CoreCompileInputs.cache
+C:\Users\11255\source\repos\Dream\Dream.Service\obj\Debug\net5.0\Dream.Service.csproj.CopyComplete
+C:\Users\11255\source\repos\Dream\Dream.Service\obj\Debug\net5.0\Dream.Service.dll
+C:\Users\11255\source\repos\Dream\Dream.Service\obj\Debug\net5.0\ref\Dream.Service.dll
+C:\Users\11255\source\repos\Dream\Dream.Service\obj\Debug\net5.0\Dream.Service.pdb

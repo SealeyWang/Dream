@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<style>
+    .title {
+        display: flex;
+        list-style: none;
+        min-width: 100px;
+        height: 40px;
+    }
+
+    .title li {
+        min-width: 100px;
+    }
+
+    .title li:hover {
+        cursor: pointer;
+        color: blue;
+    }
+
+    .content {
+        min-width: 1600px;
+        min-height: 1000px;
+    }
+
+    .content>div>iframe {
+        min-width: 1600px;
+        min-height: 1000px;
+    }
+
+    .content>div {
+        display: none;
+    }
+</style>
+
+<body>
+    <ul class="title">
+        <li id="news">新闻</li>
+        <li id="query">查询</li>
+        <li id="subject">专业分类</li>
+    </ul>
+    <div class="content">
+        <div class="news">
+            <table id="newsTable">
+
+
+
+            </table>
+
+        </div>
+        <div class="query">
+
+            <iframe src="./query.html"></iframe>
+        </div>
+        <div class="subject">
+
+            <table id="subjectTable">
+
+                <tr>
+                    <th>专业名</th>
+                    <th>专业编号</th>
+                    <th>费用</th>
+                    <th>专业信息</th>
+                </tr>
+
+            </table>
+        </div>
+    </div>
+
+</body>
+<script src="lib/jquery.js"></script>
+
+<script>
+
+    $('.content > .news').show();
+
+    const uid = localStorage.getItem('userId');
+    if (uid !== "") {
+
+
+    }
+    $('.title').on('click', 'li', (e) => {
+        const id = e.currentTarget.id;
+        $('.content > div').hide();
+        if (id === 'query') {
+            const userInfo = localStorage.getItem('userInfo');
+            if (userInfo) {
+
+                $(`.content > .${id}`).show();
+            } else {
+                alert('请先登录')
+                window.location.pathname = '/login.html'
+            }
+
+        } else {
+            $(`.content > .${id}`).show();
+        }
+    })
+
+
+    $.ajax({
+        url: '/api/Subject/list',
+        method: 'get',
+        success: (res) => {
+            res = JSON.parse(res);
+            if (res.code === 0) {
+                const data = JSON.parse(res.data);
+                const subjects = data.Table;
+                let str = ``;
+
+                for (let i = 0; i < subjects.length; i++) {
+                    const s = subjects[i];
+                    str = str + `<tr>
+                        <td>${s.subname}</td>
+                        <td>${s.subnumber}</td>
+                        <td>${s.subcost}</td>
+                        <td>${s.subinfo}</td>
+                    </tr>
+                    `
+                }
+                $('#subjectTable').html(str)
+
+
+            }
+
+        }
+    })
+
+
+    $.ajax({
+        url: '/api/News/list',
+        method: 'get',
+        success: (res) => {
+            res = JSON.parse(res);
+            if (res.code === 0) {
+                const data = JSON.parse(res.data);
+                console.log(data)
+                const news = data.Table;
+                let str = ``;
+
+                for (let i = 0; i < news.length; i++) {
+                    const n = news[i];
+                    str = str + `<tr>
+                        <td>${n.newstitle}</td>
+                        <td>${n.newscontent}</td>
+                        <td>${n.newstime}</td>
+                    </tr>
+                    `
+                }
+                $('#newsTable').html(str)
+            }
+        }
+    })
+
+</script>
+
+</html>

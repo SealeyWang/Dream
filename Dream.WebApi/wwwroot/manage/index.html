@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<style>
+    td {
+        text-align: center;
+    }
+
+    .wrapper {
+        display: flex;
+    }
+
+    .content {
+        border: 1px solid gray;
+        /* width: 800px; */
+        min-width: 1400px;
+
+        padding: 20px;
+    }
+
+    .content>div {
+        display: none;
+    }
+
+    #list {
+        min-width: 100px;
+        list-style: none;
+        text-align: center;
+        min-height: 600px;
+        padding-right: 20px;
+        border: 1px solid gray;
+        margin-top: 0;
+        margin-bottom: 0;
+        margin-right: 20px;
+    }
+
+    #list li {
+        margin: 10px 0;
+
+    }
+
+    #list li a {
+        color: blue;
+    }
+
+    .userInfo>.row {
+        padding-left: 100px;
+        margin: 20px 0;
+    }
+
+    .userInfo>.row>label {
+        width: 140px;
+        display: inline-block;
+    }
+</style>
+
+<body>
+    <div class="wrapper">
+        <ul id="list">
+            <li id="subject"><a>专业信息管理</a></li>
+            <li id="student"><a>学信生息管理</a></li>
+            <li id="news"><a>新闻管理</a></li>
+            <li id="testinfo"><a>公告管理</a></li>
+
+        </ul>
+        <div class="content">
+            <div class="subject item">
+                <header>
+                    <button id="addSubjectBtn">新增专业</button>
+                </header>
+
+                <table id="subjectTable">
+
+                    <tr>
+                        <th>专业名</th>
+                        <th>专业编号</th>
+                        <th>费用</th>
+                        <th>专业信息</th>
+                    </tr>
+
+                </table>
+            </div>
+
+            <div class="student item">
+                <table id="studentTable">
+
+                    <tr>
+                        <th>学生姓名</th>
+                        <th>出生日期</th>
+                        <th>联系电话</th>
+                        <th>电子邮箱</th>
+                        <th>学生性别</th>
+                        <th>学生年龄</th>
+                        <th>学生民族</th>
+                        <th>紧急联系电话</th>
+                        <th>专业名称</th>
+                    </tr>
+
+                </table>
+
+
+            </div>
+            <div class="news item">
+                <header>
+                    <button id="addNews">新增新闻</button>
+                </header>
+
+                <table id="newsTable">
+
+                    <tr>
+                        <th>新闻标题</th>
+                        <th>新闻内容</th>
+                        <th>发布时间</th>
+                    </tr>
+
+                </table>
+            </div>
+
+            <div class="testinfo item">
+                <header>
+                    <button id="addTestinfo">新增公告</button>
+                </header>
+
+                <table id="testinfoTable">
+
+                    <tr>
+                        <th>公告标题</th>
+                        <th>公告内容</th>
+                        <th>发布时间</th>
+                    </tr>
+
+                </table>
+            </div>
+        </div>
+    </div>
+
+</body>
+<script src="../lib/jquery.js"></script>
+
+
+<script>
+    $('.subject').show();
+    const userInfoStr = localStorage.getItem('userInfo');
+
+    if (userInfoStr) {
+        const userInfo = JSON.parse(userInfoStr);
+        $('.userInfo .row span').each((index, elem) => {
+            const id = elem.id;
+            if (id === 'User_Birthday') {
+                const birthdayStr = userInfo[id];
+                const date = new Date(birthdayStr);
+                const birthdayFormat = date.toLocaleDateString();
+                elem.textContent = birthdayFormat;
+
+
+            } else {
+                elem.textContent = userInfo[id];
+            }
+
+        })
+    }
+
+    $.ajax({
+        url: '/api/Subject/list',
+        method: 'get',
+        success: (res) => {
+            res = JSON.parse(res);
+            if (res.code === 0) {
+                const data = JSON.parse(res.data);
+                const subjects = data.Table;
+                let str = `<tr>
+                        <th>专业名</th>
+                        <th>专业编号</th>
+                        <th>费用</th>
+                        <th>专业信息</th>
+                    </tr>`;
+
+                for (let i = 0; i < subjects.length; i++) {
+                    const s = subjects[i];
+                    str = str + `<tr>
+                        <td>${s.subname}</td>
+                        <td>${s.subnumber}</td>
+                        <td>${s.subcost}</td>
+                        <td>${s.subinfo}</td>
+                    </tr>
+                    `
+                }
+                $('#subjectTable').html(str)
+
+
+            }
+
+        }
+    })
+
+    $.ajax({
+        url: '/api/News/list',
+        method: 'get',
+        success: (res) => {
+            res = JSON.parse(res);
+            if (res.code === 0) {
+                const data = JSON.parse(res.data);
+                console.log('news data', data)
+                const news = data.Table;
+                let str = `<tr>
+                    <th>新闻标题</th>
+                        <th>新闻内容</th>
+                        <th>发布时间</th>
+                    </tr>`;
+
+                for (let i = 0; i < news.length; i++) {
+                    const n = news[i];
+                    console.log('news n=', n)
+                    str = str + `<tr>
+                        <td>${n.newstitle}</td>
+                        <td>${n.newscontent}</td>
+                        <td>${n.newstime}</td>
+                    </tr>
+                    `
+                }
+                $('#newsTable').html(str)
+            }
+        }
+    })
+
+
+    $.ajax({
+        url: '/api/TestInfo/list',
+        method: 'get',
+        success: (res) => {
+            res = JSON.parse(res);
+            if (res.code === 0) {
+                const data = JSON.parse(res.data);
+                console.log(data)
+                const news = data.Table;
+                let str = `<tr>
+                    <th>公告标题</th>
+                        <th>公告内容</th>
+                        <th>发布时间</th>
+                    </tr>`;
+
+                for (let i = 0; i < news.length; i++) {
+                    const n = news[i];
+                    str = str + `<tr>
+                        <td>${n.testinfotitle}</td>
+                        <td>${n.testinfocontent}</td>
+                        <td>${n.testinfotime}</td>
+                    </tr>
+                    `
+                }
+                $('#testinfoTable').html(str)
+            }
+        }
+    })
+
+    $.ajax({
+        url: '/api/Student/list',
+        method: 'get',
+        success: (res) => {
+            res = JSON.parse(res);
+            if (res.code === 0) {
+                const data = JSON.parse(res.data);
+                console.log(data)
+                const news = data.Table;
+                let str = `<tr>
+                        <th>学生姓名</th>
+                        <th>出生日期</th>
+                        <th>联系电话</th>
+                        <th>电子邮箱</th>
+                        <th>学生性别</th>
+                        <th>学生年龄</th>
+                        <th>学生民族</th>
+                        <th>紧急联系电话</th>
+                        <th>专业名称</th>
+                    </tr>`;
+
+                for (let i = 0; i < news.length; i++) {
+                    const n = news[i];
+                    str = str + `<tr>
+                        <td>${n.stuname}</td>
+                        <td>${n.stubirthday}</td>
+                        <td>${n.stumobile}</td>
+                        <td>${n.stumail}</td>
+                        <td>${n.stusex}</td>
+                        <td>${n.stuage}</td>
+                        <td>${n.stunation}</td>
+                        <td>${n.stuhomephone}</td>
+                        <td>${n.subname}</td>
+                    </tr>
+                    `
+                }
+                $('#studentTable').html(str)
+            }
+        }
+    })
+
+
+
+    $('#list').on('click', 'li', e => {
+        console.log(e.target);
+        console.log(e.currentTarget);
+        const id = e.currentTarget.id;
+        $('.content > .item').hide();
+        $(`.${id}`).show();
+
+    })
+
+    $('#addSubjectBtn').click(() => {
+        window.location.pathname = '/manage/newSubject.html'
+
+    })
+
+
+    $('#addNews').click(() => {
+        window.location.pathname = '/manage/addNews.html'
+
+    })
+
+
+    $('#addTestinfo').click(() => {
+        window.location.pathname = '/manage/addTestinfo.html'
+
+    })
+    addTestinfo
+
+
+
+
+</script>
+
+</html>

@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>注册</title>
+</head>
+
+<style>
+    .wrapper {
+        border: 1px solid gray;
+        padding: 10px;
+    }
+
+    .row {
+        margin: 20px auto;
+    }
+
+    .row:first-child {
+        margin-top: 0;
+    }
+
+    .row:last-child {
+        margin-bottom: 0;
+    }
+
+    .user-img {
+        width: 115px;
+        height: 80px;
+    }
+
+    #submit {
+        margin-left: 120px;
+    }
+</style>
+
+<body>
+    <div class="wrapper">
+        <div class="row">
+            姓名: <input name="user_Name" />
+        </div>
+
+        <div class="row">
+            性别:
+            <select id="user_Sex">
+                <option value="0">男</option>
+                <option value="1">女</option>
+            </select>
+        </div>
+
+        <div class="row">
+            家庭住址: <input name="user_Address" />
+        </div>
+
+        <div class="row">
+            出生日期:
+            <select id="year">
+                <option value="">请选择</option>
+            </select>
+            年
+            <select id="month">
+                <option value="">请选择</option>
+            </select>
+            月
+            <select id="date">
+                <option value="">请选择</option>
+            </select>
+            日
+        </div>
+
+        <div class="row">
+            联系电话: <input name="user_Tel" />
+        </div>
+
+        <div class="row">
+            电子邮箱: <input name="user_Email" />
+        </div>
+
+        <div class="row">
+            民族: <input name="user_Race" />
+        </div>
+
+        <div class="row">
+            学历: <input name="user_Degree" />
+        </div>
+
+
+        <div class="row">
+            你的照片:
+            <img class="user-img" src="" />
+            <button><label for="file">浏览</label></button>
+            <input id="file" style="visibility: hidden; display: none;" onchange="imgChange(this)" type="file"
+                accept="image/gif, image/jpeg, image/png" />
+        </div>
+
+
+        <div class="row">
+            登录密码: <input id="passowrd1" type="password" name="user_Password" />
+        </div>
+
+        <div class="row">
+            再次输入密码: <input id="passowrd2" type="password" name="user_Password" />
+        </div>
+        <button id="submit">提交</button>
+    </div>
+</body>
+<script src="lib/jquery.js"></script>
+
+
+<script>
+    const tody = new Date();
+
+    const initDate = () => {
+        const tody = new Date();
+
+        let year = tody.getFullYear();
+        const yearOptions = []
+        for (let i = year; i > year - 70; i--) {
+            const o = document.createElement('option');
+            o.value = i;
+            o.text = i;
+            yearOptions.push(o)
+        }
+        $('#year').append(yearOptions);
+
+        const month = $('#month')
+        const months = [];
+        for (let i = 0; i < 12; i++) {
+            const o = document.createElement('option');
+            o.value = i;
+            o.text = i + 1;
+            months.push(o)
+        }
+        month.append(months);
+
+
+    }
+    $('#month').on('change', (e => {
+        const currentM = $('#month').val()
+
+        const selectY = $('#year').val()
+
+        const year = selectY || new Date().getFullYear();
+        const now = new Date(parseInt(year), parseInt(currentM) + 1, 0);
+        const date = now.getDate()
+        console.log(date);
+        const dateOptions = [];
+        $('#date').html('<option value="">请选择</option>');
+
+        for (let i = 1; i <= date; i++) {
+            const o = document.createElement('option');
+            o.value = i;
+            o.text = i;
+            dateOptions.push(o)
+        }
+        $('#date').append(dateOptions);
+
+
+    }))
+    initDate();
+
+
+
+    const toBase64 = file => new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.readAsDataURL(file);
+        reader.onload = () => resolve(reader.result);
+        reader.onerror = error => reject(error);
+    });
+
+    const imgChange = async (e) => {
+        console.log(e.files);
+        const result = await toBase64(e.files[0]);
+        console.log(result);
+        $('.user-img').attr('src', result);
+
+    }
+
+
+
+    $('#submit').click(e => {
+
+        const p1 = $('#passowrd1').val();
+        const p2 = $('#passowrd2').val();
+        if (p1 !== p2) {
+            alert('两次输入的密码不一致')
+            return
+        }
+
+        const year = $('#year').val()
+        const month = $('#month').val()
+        const date = $('#date').val()
+        const allNotSelect = !year && !month && !date;
+        if (allNotSelect) {
+        } else if ((!year || !month || !date)) {
+            alert('请选择正确的年月日')
+
+        }
+
+        const user_Name = $()
+        const params = {
+            user_Name: '',
+            user_Address: '',
+            user_Tel: '',
+            user_Email: '',
+            user_Race: '',
+            user_Degree: '',
+            user_Password: '',
+        }
+
+        for (key in params) {
+            const value = $(`input[name=${key}]`).val();
+            params[key] = value;
+        }
+
+        params.user_Image = $('.user-img').attr('src')
+        params.user_Sex = $('#user_Sex').find(":selected").text();
+
+
+        if (year && month && date) {
+            params.user_Birthday = new Date(year, month, date).toLocaleDateString('zh-cn');
+
+        }
+        console.log(params);
+        if (params.user_Name === '' || params.user_Email === '' || params.user_Password === '') {
+            alert('必须填写用户名  密码 和邮箱')
+            return
+        }
+
+
+        $.ajax({
+            url: '/api/User/register',
+            method: 'post',
+            contentType: "application/json;charset=UTF-8",
+            data: JSON.stringify(params),
+            success: result => {
+                const r = JSON.parse(result);
+                console.log(r);
+                if (r.code === 0) {
+                    const userId = r.data;
+                    window.location.pathname = '/login.html';
+
+                } else {
+                    alert('插入失败')
+                }
+            }
+
+        })
+
+
+        // "user_Name": "string",
+        //     "user_Address": "string",
+        //         "user_Email": "string",
+        //             "user_Tel": "string",
+        //                 "user_Sex": "string",
+        //                     "user_Birthday": "string",
+        //                         "user_Race": "string",
+        //                             "user_Degree": "string",
+        //                                 "user_Image": "string",
+        //                                     "user_Password": "string"
+    })
+</script>
+
+</html>
